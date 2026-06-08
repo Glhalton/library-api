@@ -1,0 +1,26 @@
+import * as z from "zod";
+
+export const bookParamsSchema = z.object({
+  id: z.coerce.number(),
+});
+
+export const bookCreateBodySchema = z.object({
+  titulo: z.string(),
+  autor: z.string(),
+  ano_de_publicacao: z.date(),
+  editora: z.string(),
+  genero: z.string(),
+  numero_de_paginas: z.number(),
+});
+
+export const bookUpdateBodySchema = z.object({
+  titulo: z.string().optional(),
+  autor: z.string().optional(),
+  ano_de_publicacao: z.date().optional(),
+  editora: z.string().optional(),
+  genero: z.string().optional(),
+  numero_de_paginas: z.number().optional(),
+});
+
+export type BookCreateBody = z.infer<typeof bookCreateBodySchema>;
+export type BookUpdateBody = z.infer<typeof bookUpdateBodySchema>;
