@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:15
+    container_name: library-db
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+
+  adminer:
+    image: adminer:latest
+    container_name: library-adminer
+    restart: unless-stopped
+    environment:
+      - ADMINER_DEFAULT_SERVER=db
+    ports:
+      - "${ADMINER_PORT:-8080}:8080"
+    depends_on:
+      - db
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: library-api
+    ports:
+      - "${API_PORT:-3333}:3333"
+    command: sh -c "npx prisma migrate dev && npx prisma db seed && npm run dev"
+    environment:
+      - POSTGRES_HOST=librarydb
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_DB}:${POSTGRES_PORT}/${POSTGRES_DB}
+    env_file:
+      - .env
+    depends_on:
+      - db
