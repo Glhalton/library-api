@@ -57,7 +57,7 @@ export async function createBookController(
       genero,
       numero_de_paginas,
       titulo,
-    } = bookCreateBodySchema.parse(request.params);
+    } = bookCreateBodySchema.parse(request.body);
 
     const book = await createBookService({
       ano_de_publicacao,
@@ -87,7 +87,7 @@ export async function updateBookController(
       genero,
       numero_de_paginas,
       titulo,
-    } = bookUpdateBodySchema.parse(request.params);
+    } = bookUpdateBodySchema.parse(request.body);
 
     const book = await getBookService(id);
 

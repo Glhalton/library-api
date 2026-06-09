@@ -14,7 +14,7 @@ export default async function booksRoutes(app: FastifyInstance) {
 
   app.post("/", createBookController);
 
-  app.patch("/", updateBookController);
+  app.patch("/:id", updateBookController);
 
-  app.delete("/", deleteBookController);
+  app.delete("/:id", deleteBookController);
 }

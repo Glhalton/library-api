@@ -28,8 +28,8 @@ services:
       - "${API_PORT:-3333}:3333"
     command: sh -c "npx prisma migrate dev && npx prisma db seed && npm run dev"
     environment:
-      - POSTGRES_HOST=hs-dev-db
-      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@hs-dev-db:5432/${POSTGRES_DB}
+      - POSTGRES_HOST=librarydb
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_DB}:${POSTGRES_PORT}/${POSTGRES_DB}
     env_file:
       - .env
     depends_on:
