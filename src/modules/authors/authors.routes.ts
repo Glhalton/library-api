@@ -1,4 +1,13 @@
 import type { FastifyInstance } from "fastify";
+import type { ZodTypeProvider } from "fastify-type-provider-zod";
+import {
+  authorCreateBodySchema,
+  authorListSchema,
+  authorParamsSchema,
+  authorSchema,
+  authorUpdateBodySchema,
+  notFoundSchema,
+} from "./authors.schemas";
 import {
   createAuthorController,
   deleteAuthorController,
@@ -8,13 +17,88 @@ import {
 } from "./authors.controller";
 
 export default async function authorsRoutes(app: FastifyInstance) {
-  app.get("/:id", getAuthorController);
+  const r = app.withTypeProvider<ZodTypeProvider>();
 
-  app.get("/", listAuthorsController);
+  r.get(
+    "/:id",
+    {
+      schema: {
+        summary: "Retorna um autor",
+        description: "Retorna um autor a partir do seu id",
+        tags: ["Autores"],
+        params: authorParamsSchema,
+        response: {
+          200: authorSchema,
+          404: notFoundSchema,
+        },
+      },
+    },
+    getAuthorController,
+  );
 
-  app.post("/", createAuthorController);
+  r.get(
+    "/",
+    {
+      schema: {
+        summary: "Lista todos os autores",
+        description: "Retorna a lista de todos os autores cadastrados",
+        tags: ["Autores"],
+        response: {
+          200: authorListSchema,
+        },
+      },
+    },
+    listAuthorsController,
+  );
 
-  app.patch("/:id", updateAuthorController);
+  r.post(
+    "/",
+    {
+      schema: {
+        summary: "Cria um autor",
+        description: "Cadastra um novo autor",
+        tags: ["Autores"],
+        body: authorCreateBodySchema,
+        response: {
+          201: authorSchema,
+        },
+      },
+    },
+    createAuthorController,
+  );
 
-  app.delete("/:id", deleteAuthorController);
+  r.patch(
+    "/:id",
+    {
+      schema: {
+        summary: "Atualiza um autor",
+        description: "Atualiza os dados de um autor existente",
+        tags: ["Autores"],
+        params: authorParamsSchema,
+        body: authorUpdateBodySchema,
+        response: {
+          200: authorSchema,
+          404: notFoundSchema,
+        },
+      },
+    },
+    updateAuthorController,
+  );
+
+  r.delete(
+    "/:id",
+    {
+      schema: {
+        summary: "Remove um autor",
+        description: "Remove um autor existente",
+        tags: ["Autores"],
+        params: authorParamsSchema,
+        response: {
+          200: authorSchema,
+          404: notFoundSchema,
+        },
+      },
+    },
+    deleteAuthorController,
+  );
 }
