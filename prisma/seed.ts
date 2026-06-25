@@ -5,15 +5,15 @@ async function main() {
     data: [
       {
         nome: "J. K. Rowling",
-        data_de_nascimento: "1965-07-31",
+        data_de_nascimento: new Date("1965-07-31"),
       },
       {
         nome: "Antoine de Saint-Exupéry",
-        data_de_nascimento: "1900-06-29",
+        data_de_nascimento: new Date("1900-06-29"),
       },
       {
         nome: "Inio Asano",
-        data_de_nascimento: "1980-09-22",
+        data_de_nascimento: new Date("1980-09-22"),
       },
     ],
   });
