@@ -15,7 +15,7 @@ export const listBooksService = async () => {
 
 export const createBookService = async ({
   ano_de_publicacao,
-  autor,
+  autor_id,
   editora,
   genero,
   numero_de_paginas,
@@ -24,7 +24,7 @@ export const createBookService = async ({
   const bookCreated = await prisma.livros.create({
     data: {
       ano_de_publicacao,
-      autor,
+      autor_id,
       editora,
       genero,
       numero_de_paginas,
@@ -39,7 +39,7 @@ export const updateBookService = async (
   id: number,
   {
     ano_de_publicacao,
-    autor,
+    autor_id,
     editora,
     genero,
     numero_de_paginas,
@@ -51,7 +51,7 @@ export const updateBookService = async (
     data: {
       titulo,
       ano_de_publicacao,
-      autor,
+      autor_id,
       editora,
       genero,
       numero_de_paginas,

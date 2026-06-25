@@ -35,11 +35,10 @@ export async function listBooksController(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const book = await listBooksService();
-
-  return reply.status(200).send(book);
-
   try {
+    const book = await listBooksService();
+
+    return reply.status(200).send(book);
   } catch (error: unknown) {
     return reply.status(500).send(error);
   }
@@ -52,7 +51,7 @@ export async function createBookController(
   try {
     const {
       ano_de_publicacao,
-      autor,
+      autor_id,
       editora,
       genero,
       numero_de_paginas,
@@ -61,7 +60,7 @@ export async function createBookController(
 
     const book = await createBookService({
       ano_de_publicacao,
-      autor,
+      autor_id,
       editora,
       genero,
       numero_de_paginas,
@@ -82,7 +81,7 @@ export async function updateBookController(
     const { id } = bookParamsSchema.parse(request.params);
     const {
       ano_de_publicacao,
-      autor,
+      autor_id,
       editora,
       genero,
       numero_de_paginas,
@@ -97,7 +96,7 @@ export async function updateBookController(
 
     const bookUpdated = await updateBookService(id, {
       ano_de_publicacao,
-      autor,
+      autor_id,
       editora,
       genero,
       numero_de_paginas,
