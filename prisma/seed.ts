@@ -1,11 +1,28 @@
 import { prisma } from "../src/lib/prisma.js";
 
 async function main() {
+  await prisma.autores.createMany({
+    data: [
+      {
+        nome: "J. K. Rowling",
+        data_de_nascimento: "1965-07-31",
+      },
+      {
+        nome: "Antoine de Saint-Exupéry",
+        data_de_nascimento: "1900-06-29",
+      },
+      {
+        nome: "Inio Asano",
+        data_de_nascimento: "1980-09-22",
+      },
+    ],
+  });
+
   await prisma.livros.createMany({
     data: [
       {
         titulo: "Harry Potter e a Pedra Filosofal",
-        autor: "J. K. Rowling",
+        autor_id: 1,
         ano_de_publicacao: new Date("1997-06-26"),
         editora: "Bloomsbury Publishing",
         genero: "Fantasia",
@@ -13,7 +30,7 @@ async function main() {
       },
       {
         titulo: "O Pequeno Príncipe",
-        autor: "Antoine de Saint-Exupéry",
+        autor_id: 2,
         ano_de_publicacao: new Date("1943-04-06"),
         editora: "Reynal & Hitchcock",
         genero: "Novela filosófica",
@@ -21,7 +38,7 @@ async function main() {
       },
       {
         titulo: "Boa Noite Punpun",
-        autor: "Inio Asano",
+        autor_id: 3,
         ano_de_publicacao: new Date("2007-03-15"),
         editora: "Shogakukan",
         genero: "Drama",

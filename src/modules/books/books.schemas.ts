@@ -6,7 +6,7 @@ export const bookParamsSchema = z.object({
 
 export const bookCreateBodySchema = z.object({
   titulo: z.string(),
-  autor: z.string(),
+  autor_id: z.number(),
   ano_de_publicacao: z.coerce.date(),
   editora: z.string(),
   genero: z.string(),
@@ -15,7 +15,7 @@ export const bookCreateBodySchema = z.object({
 
 export const bookUpdateBodySchema = z.object({
   titulo: z.string().optional(),
-  autor: z.string().optional(),
+  autor_id: z.number().optional(),
   ano_de_publicacao: z.coerce.date().optional(),
   editora: z.string().optional(),
   genero: z.string().optional(),
